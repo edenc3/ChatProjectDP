@@ -47,6 +47,7 @@ class Messages implements Runnable {
         }
     }
 }
+
 public class Server implements Runnable {
     private ServerSocket serverSocket;
     private Messages messages;
