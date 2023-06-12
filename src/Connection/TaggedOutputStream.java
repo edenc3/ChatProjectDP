@@ -17,14 +17,14 @@ public class TaggedOutputStream {
     }
 
     private Boolean shouldSend(String from, String recipient) {
+        // Don't send messages from a client to itself
+        if (from.equals(this.recipientTag) && !this.recipientTag.equals(TagAll)) {
+            return false;
+        }
+
         // Always send if the recipient tag or the recipient are equal to TagAll
         if (this.recipientTag.equals(TagAll) || recipient.equals(TagAll)) {
             return true;
-        }
-
-        // Don't send messages from a client to itself
-        if (from.equals(recipient)) {
-            return false;
         }
 
         // Only send the message if the tag is correct
