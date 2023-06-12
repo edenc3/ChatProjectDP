@@ -13,11 +13,13 @@ public class Connection implements Runnable {
     private Socket socket;
     private MessageConsumer consumer;
     private MessageProducer producer;
+    private String nickname;
 
-    private Connection(Socket socket, MessageConsumer consumer, MessageProducer producer) {
+    private Connection(Socket socket, MessageConsumer consumer, MessageProducer producer, String nickname) {
         this.socket = socket;
         this.consumer = consumer;
         this.producer = producer;
+        this.nickname = nickname;
     }
 
     public static Connection createClientConnection(String nickname, BlockingQueue<MessagePacket> inMessages, BlockingQueue<MessagePacket> outMessages, String address, int port) throws IOException {
@@ -36,7 +38,7 @@ public class Connection implements Runnable {
         // Packet hello - send client information to the server
         outputStream.writeUTF(new HelloPacket(nickname).toJson());
 
-        return new Connection(socket, consumer, producer);
+        return new Connection(socket, consumer, producer, nickname);
     }
 
     public static Connection createServerConnection(Socket socket, BlockingQueue<MessagePacket> mainQueue, BlockingQueue<MessagePacket> individualQueue) throws IOException {
@@ -53,7 +55,11 @@ public class Connection implements Runnable {
         var taggedOutputStream = new TaggedOutputStream(helloPacket.getNickname(), outputStream);
         var consumer = new OutputStreamMessageConsumer(individualQueue, taggedOutputStream);
 
-        return new Connection(socket, consumer, producer);
+        return new Connection(socket, consumer, producer, helloPacket.getNickname());
+    }
+
+    public String getNickname() {
+        return nickname;
     }
 
     @Override
