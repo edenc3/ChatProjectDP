@@ -44,10 +44,10 @@ public class Connection implements Runnable {
         // Packet hello - get client information from the input stream
         var helloPacket = HelloPacket.fromJson(inputStream.readUTF());
 
-        // Produce messages from socket's input and write them to the `messages` queue
+        // Produce messages from socket's input and write them to the `mainQueue` queue
         var producer = new InputStreamMessageProducer(mainQueue, inputStream);
 
-        // Consume messages from `messages` and write them to the tagged output stream
+        // Consume messages from `individualQueue` and write them to the tagged output stream
         var outputStream = new DataOutputStream(socket.getOutputStream());
         var taggedOutputStream = new TaggedOutputStream(helloPacket.getNickname(), outputStream);
         var consumer = new OutputStreamMessageConsumer(individualQueue, taggedOutputStream);

@@ -18,7 +18,7 @@ public class Client {
 
         outMessages.add(new MessagePacket(args[0], args[1], args[2]));
 
-        var conn = Connection.createClientConnection(args[0], inMessages, outMessages, "localhost", 9999);
+        var conn = Connection.createClientConnection(args[0], inMessages, outMessages, "localhost", 1300);
         new Thread(conn).start();
 
         while (true) {

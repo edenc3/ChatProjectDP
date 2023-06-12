@@ -71,7 +71,7 @@ public class Server implements Runnable {
     }
 
     public static void main(String[] args) throws IOException {
-        var server = new Server(9999);
+        var server = new Server(1300);
         server.run();
     }
 }
