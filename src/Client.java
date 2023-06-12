@@ -12,10 +12,6 @@ public class Client {
         // Out messages - are messages that are written from the GUI and should be sent to the server
         var outMessages = new LinkedBlockingQueue<MessagePacket>();
 
-        // Be aware of one edge case - when the user sends a broadcast message, the user will also receive that message
-        // but if the user sends a message to someone specific, the user won't receive the message
-        // (this should be handled in the GUI)
-
         outMessages.add(new MessagePacket(args[0], args[1], args[2]));
 
         var conn = Connection.createClientConnection(args[0], inMessages, outMessages, "localhost", 1300);

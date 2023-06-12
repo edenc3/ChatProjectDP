@@ -16,10 +16,23 @@ public class TaggedOutputStream {
         this.outputStream = outputStream;
     }
 
-    public void send(MessagePacket message) throws IOException {
-        // Only send the message if the tag is correct
+    private Boolean shouldSend(String from, String recipient) {
         // Always send if the recipient tag or the recipient are equal to TagAll
-        if (!this.recipientTag.equals(TagAll) && !this.recipientTag.equals(message.getRecipient()) && !message.getRecipient().equals(TagAll)) {
+        if (this.recipientTag.equals(TagAll) || recipient.equals(TagAll)) {
+            return true;
+        }
+
+        // Don't send messages from a client to itself
+        if (from.equals(recipient)) {
+            return false;
+        }
+
+        // Only send the message if the tag is correct
+        return this.recipientTag.equals(recipient);
+    }
+
+    public void send(MessagePacket message) throws IOException {
+        if (!shouldSend(message.getFrom(), message.getRecipient())) {
             return;
         }
 

@@ -29,6 +29,7 @@ public class Connection implements Runnable {
 
         // Consume messages from `outMessages` and write them to the tagged output stream
         var outputStream = new DataOutputStream(socket.getOutputStream());
+        // Send everything - there isn't a real purpose for the tagged output stream here
         var taggedOutputStream = new TaggedOutputStream(TaggedOutputStream.TagAll, outputStream);
         var consumer = new OutputStreamMessageConsumer(outMessages, taggedOutputStream);
 
