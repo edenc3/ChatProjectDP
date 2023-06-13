@@ -13,7 +13,11 @@ import Connection.Connection;
 import Connection.MessageConsumer;
 import Connection.TaggedOutputStream;
 
+
 class MessageWriter {
+    /*
+     * This class is responsible for writing messages to the GUI.
+     */
     private JTextArea messagesText;
 
     public MessageWriter(JTextArea messagesText) {
@@ -21,12 +25,16 @@ class MessageWriter {
     }
 
     public void write(MessagePacket msg) {
+        // If the message is a broadcast, the recipient is TaggedOutputStream.TagAll
         var room = msg.getRecipient().equals(TaggedOutputStream.TagAll) ? "Broadcast" : "DM";
         messagesText.append(String.format("%s from %s: %s\n", room, msg.getFrom(), msg.getMessage()));
     }
 }
 
 class GUIMessageConsumer extends MessageConsumer {
+    /*
+     * This class is responsible for consuming messages from the server.
+     */
     private MessageWriter writer;
 
     public GUIMessageConsumer(BlockingQueue<MessagePacket> inMessages, JTextArea messagesText) {
@@ -39,6 +47,12 @@ class GUIMessageConsumer extends MessageConsumer {
         writer.write(poll());
     }
 }
+
+/**
+ * This class is the entry point of the client application.
+ * It is responsible for starting the GUI for each client.
+ * It also creates the connection object and the message consumer object.
+ */
 
 public class ClientGUI {
     private JFrame frame;
@@ -60,6 +74,9 @@ public class ClientGUI {
     private Connection connection;
 
     public ClientGUI() {
+        /*
+         * Constructor that initializes the GUI components.
+         */
         frame = new JFrame();
         tf = new JTextField(10);
         tfRecipient = new JTextField(10);
@@ -83,11 +100,16 @@ public class ClientGUI {
 
         // Out messages - are messages that are written from the GUI and should be sent to the server
         outMessages = new LinkedBlockingQueue<>();
-
+        //this Thread is responsible for sending messages to the server from the GUI
         new Thread(new GUIMessageConsumer(inMessages, messagesText)).start();
+
     }
 
     public void start() {
+        /*
+         * This method is responsible for starting the GUI, and adding the action listeners to the buttons.
+         * by creating a new thread for the connection object.
+         */
         frame.setLayout(new BorderLayout());
         panelNorth.setBackground(Color.WHITE);
         panelNorth.add(nicknameLabel);
@@ -116,6 +138,13 @@ public class ClientGUI {
         btDisconnect.addActionListener(new DisconnectButtonsObserver());
     }
 
+    /**
+     * This class is responsible for sending messages from the GUI to the server.
+     * It is an inner class of the ClientGUI class.
+     * It implements the ActionListener interface.
+     * And it overrides the actionPerformed method.
+     * The actionPerformed method is called when the user clicks the send button.
+     */
     class SendButtonsObserver implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -125,6 +154,13 @@ public class ClientGUI {
         }
     }
 
+    /**
+     * This class is responsible for creating the connection object and starting it.
+     * It is an inner class of the ClientGUI class.
+     * It implements the ActionListener interface.
+     * And it overrides the actionPerformed method.
+     * The actionPerformed method is called when the user clicks the connect button.
+     */
     class ConnectButtonsObserver implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -137,6 +173,13 @@ public class ClientGUI {
         }
     }
 
+    /**
+     * This class is responsible for closing the connection object.
+     * It is an inner class of the ClientGUI class.
+     * It implements the ActionListener interface.
+     * And it overrides the actionPerformed method.
+     * The actionPerformed method is called when the user clicks the disconnect button.
+     */
     class DisconnectButtonsObserver implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {

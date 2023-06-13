@@ -8,11 +8,21 @@ import Connection.Connection;
 
 import Packets.MessagePacket;
 
+/**
+ * This class is responsible for storing all the messages that are sent by the clients.
+ * It has a main queue that stores all the messages that are sent by the clients.
+ * It also has a list of queues, one for each client, that stores the messages that are sent to each client.
+ * The main queue is used to forward the messages to all the clients.
+ * The list of queues is used to forward the messages to each individual client.
+ * @ param mainQueue The main queue that stores all the messages that are sent by the clients
+ * @ param messagesPerClient The list of queues, one for each client, that stores the messages that are sent to each client
+ */
 class Messages implements Runnable {
     private BlockingQueue<MessagePacket> mainQueue;
     private List<BlockingQueue<MessagePacket>> messagesPerClient;
 
     public Messages() {
+        //constructor for the messages class
         this.mainQueue = new LinkedBlockingQueue<>();
         this.messagesPerClient = new ArrayList<>();
     }
@@ -47,19 +57,33 @@ class Messages implements Runnable {
         }
     }
 }
-
+/**
+ * This class is responsible for creating a server socket and listening for new connections.
+ * When a new connection is established, it creates a new thread to handle the connection.
+ * It also creates a new thread to forward all the messages from the main message queue to all the clients.
+ * @ param serverSocket The server socket to listen on
+ * @ param messages The messages object that stores all the messages that are sent by the clients
+ */
 public class Server implements Runnable {
     private ServerSocket serverSocket;
     private Messages messages;
 
     public Server(int port) throws IOException {
+        /*
+        Constructor for the server class
+        param port The port to listen on
+         */
         this.serverSocket = new ServerSocket(port);
         this.messages = new Messages();
     }
 
     @Override
     public void run() {
-        // Forward all messages from the main message queue to all the clients
+        /*
+        Forward all messages from the main message queue to all the clients
+        This is done in a separate thread so that the server can continue to listen for new connections
+        param conn The connection object that handles the connection with the client
+         */
         new Thread(this.messages).start();
 
         while (true) {
@@ -71,6 +95,9 @@ public class Server implements Runnable {
     }
 
     public static void main(String[] args) throws IOException {
+        /*
+        Create a new server and run it
+         */
         var server = new Server(1300);
         server.run();
     }

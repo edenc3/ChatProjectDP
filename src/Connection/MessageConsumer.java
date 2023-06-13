@@ -4,6 +4,12 @@ import Packets.MessagePacket;
 
 import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
+/**
+ * MessageConsumer class - represents a message consumer
+ * @ param messages - the queue of messages using BlockingQueue
+ * @ method poll - pull a message from the queue
+ * @ method consume - consumes a message
+ */
 
 public abstract class MessageConsumer implements Runnable {
     private BlockingQueue<MessagePacket> messages;

@@ -5,6 +5,14 @@ import Packets.MessagePacket;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+/**
+ * TaggedOutputStream class - represents a tagged output stream
+ * @ param recipientTag - the recipient tag
+ * @ param outputStream - the output stream
+ * @ method send - sends a message packet
+ * @ method shouldSend - checks if the message should be sent
+ * @ method TagAll - a constant for sending messages to all clients
+ */
 public class TaggedOutputStream {
     public static String TagAll = "*";
 
@@ -32,10 +40,11 @@ public class TaggedOutputStream {
     }
 
     public void send(MessagePacket message) throws IOException {
+        // send the message only if the tag is correct
         if (!shouldSend(message.getFrom(), message.getRecipient())) {
             return;
         }
-
+        // send the message
         this.outputStream.writeUTF(message.toJson());
     }
 }

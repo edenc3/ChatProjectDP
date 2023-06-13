@@ -8,7 +8,13 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
-
+/**
+ * Connection class - represents a connection proxy design pattern
+ * @ param socket - the socket
+ * @ param consumer - the message consumer
+ * @ param producer - the message producer
+ * @ param nickname - the nickname of the user
+ */
 public class Connection implements Runnable {
     private Socket socket;
     private MessageConsumer consumer;
@@ -16,6 +22,9 @@ public class Connection implements Runnable {
     private String nickname;
 
     private Connection(Socket socket, MessageConsumer consumer, MessageProducer producer, String nickname) {
+        /*
+        Constructor for Connection
+         */
         this.socket = socket;
         this.consumer = consumer;
         this.producer = producer;

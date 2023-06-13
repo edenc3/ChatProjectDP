@@ -5,6 +5,11 @@ import Packets.MessagePacket;
 import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
 
+/**
+ * MessageProducer class - represents a message producer
+ * @ param messages - the queue of messages using BlockingQueue
+ * @ method produce - adds a message to the queue
+ */
 public abstract class MessageProducer implements Runnable {
     private BlockingQueue<MessagePacket> messages;
 
