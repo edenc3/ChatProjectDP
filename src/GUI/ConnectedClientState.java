@@ -13,5 +13,6 @@ public class ConnectedClientState implements IState{
     public ConnectedClientState(ClientGUI GUIref) {
         GUIref.setConnectButtonColor(Color.GREEN);
         GUIref.setDisconnectButtonColor(Color.GRAY);
+        GUIref.startConnection();
     }
 }

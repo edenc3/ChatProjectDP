@@ -109,7 +109,32 @@ public class ClientGUI {
         btConnect.setBackground(Color.GRAY);
 
     }
-
+    /*
+        * This method is responsible for starting the connection to the server.
+        * it public because it is called from the state classes.
+        * in the next version of the project, this method will be moved to the state classes, and will be private, for better security.
+     */
+    public void startConnection() {
+        try {
+            this.connection = Connection.createClientConnection(tfNickname.getText(), inMessages, outMessages, tfServer.getText(), Integer.parseInt(tfPort.getText()));
+            new Thread(this.connection).start();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    /*
+     * This method is responsible for closing the connection to the server.
+     * it public because it is called from the state classes.
+     * in the next version of the project, this method will be moved to the state classes, and will be private, for better security.
+     */
+    public void endConnection(){
+        try {
+            connection.close();
+            connection = null;
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
     public IState getState() {
         return state;
     }
@@ -184,13 +209,9 @@ public class ClientGUI {
     class ConnectButtonsObserver implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            try {
-                connection = Connection.createClientConnection(tfNickname.getText(), inMessages, outMessages, tfServer.getText(), Integer.parseInt(tfPort.getText()));
-                new Thread(connection).start();
-                setState(new ConnectedClientState(ClientGUI.this));
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
+            //this method using design pattern state
+            //it will start connectState, that change to button colors and start connection
+            setState(new ConnectedClientState(ClientGUI.this));
         }
     }
 
@@ -204,14 +225,9 @@ public class ClientGUI {
     class DisconnectButtonsObserver implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            try {
-                connection.close();
-                connection = null;
-                setState(new DisconnectedClientState(ClientGUI.this));
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-
+            //this method using design pattern state
+            //it will start connectState, that change to button colors and start connection
+            setState(new DisconnectedClientState(ClientGUI.this));
         }
     }
 }
