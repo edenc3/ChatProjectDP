@@ -1,12 +1,40 @@
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import Connection.Connection;
 
 import Packets.MessagePacket;
+
+/**
+ * This class implements the Iterator design pattern.
+ * This class is responsible for storing all the messages that are sent by the clients.
+ * It has a list of queues, one for each client, that stores the messages that are sent to each client.
+ * The list of queues is used to later forward the messages to each individual client.
+ * @ param messagesPerClient The list of queues, one for each client, that stores the messages that are sent to each client
+ */
+class ClientsMessages implements Iterable<BlockingQueue<MessagePacket>> {
+    private List<BlockingQueue<MessagePacket>> messagesPerClient;
+
+    public ClientsMessages() {
+        this.messagesPerClient = new ArrayList<>();
+    }
+
+    @Override
+    public Iterator<BlockingQueue<MessagePacket>> iterator() {
+        return messagesPerClient.iterator();
+    }
+
+    public BlockingQueue<MessagePacket> newClient() {
+        // Note that currently queues are never being removed
+        var messages = new LinkedBlockingQueue<MessagePacket>();
+        this.messagesPerClient.add(messages);
+        return messages;
+    }
+}
 
 /**
  * This class is responsible for storing all the messages that are sent by the clients.
@@ -19,12 +47,12 @@ import Packets.MessagePacket;
  */
 class Messages implements Runnable {
     private BlockingQueue<MessagePacket> mainQueue;
-    private List<BlockingQueue<MessagePacket>> messagesPerClient;
+    private ClientsMessages messagesPerClient;
 
     public Messages() {
         //constructor for the messages class
         this.mainQueue = new LinkedBlockingQueue<>();
-        this.messagesPerClient = new ArrayList<>();
+        this.messagesPerClient = new ClientsMessages();
     }
 
     public BlockingQueue<MessagePacket> getMainQueue() {
@@ -32,10 +60,7 @@ class Messages implements Runnable {
     }
 
     public BlockingQueue<MessagePacket> newClient() {
-        // Note that currently queues are never being removed
-        var messages = new LinkedBlockingQueue<MessagePacket>();
-        this.messagesPerClient.add(messages);
-        return messages;
+        return this.messagesPerClient.newClient();
     }
 
     // Forwards the messages from the main queue to each individual client
