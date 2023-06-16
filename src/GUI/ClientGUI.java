@@ -72,6 +72,7 @@ public class ClientGUI {
     private BlockingQueue<MessagePacket> inMessages;
     private BlockingQueue<MessagePacket> outMessages;
     private Connection connection;
+    private IState state;
 
     public ClientGUI() {
         /*
@@ -103,6 +104,25 @@ public class ClientGUI {
         //this Thread is responsible for sending messages to the server from the GUI
         new Thread(new GUIMessageConsumer(inMessages, messagesText)).start();
 
+        //We start the GUI in the disconnected state
+        btDisconnect.setBackground(Color.RED);
+        btConnect.setBackground(Color.GRAY);
+
+    }
+
+    public IState getState() {
+        return state;
+    }
+
+    public void setState(IState state) {
+        this.state = state;
+    }
+
+    public void setConnectButtonColor(Color color) {
+        btConnect.setBackground(color);
+    }
+    public void setDisconnectButtonColor(Color color) {
+        btDisconnect.setBackground(color);
     }
 
     public void start() {
@@ -167,6 +187,7 @@ public class ClientGUI {
             try {
                 connection = Connection.createClientConnection(tfNickname.getText(), inMessages, outMessages, tfServer.getText(), Integer.parseInt(tfPort.getText()));
                 new Thread(connection).start();
+                setState(new ConnectedClientState(ClientGUI.this));
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -186,9 +207,11 @@ public class ClientGUI {
             try {
                 connection.close();
                 connection = null;
+                setState(new DisconnectedClientState(ClientGUI.this));
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
+
         }
     }
 }
