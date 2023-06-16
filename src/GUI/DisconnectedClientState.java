@@ -5,14 +5,16 @@ import java.awt.*;
 
 public class DisconnectedClientState implements IState{
 
-    public DisconnectedClientState(ClientGUI guiRef) {
-        guiRef.setConnectButtonColor(Color.GRAY);
-        guiRef.setDisconnectButtonColor(Color.RED);
-        guiRef.endConnection(); 
-    }
-
     @Override
     public boolean convertStatusButton(JButton button) {
+        //future uses
         return false;
+    }
+
+    public DisconnectedClientState(ClientGUI guiRef) {
+        if(guiRef.endConnection() != 0){
+            guiRef.setConnectButtonColor(Color.GRAY);
+            guiRef.setDisconnectButtonColor(Color.RED);
+        }
     }
 }

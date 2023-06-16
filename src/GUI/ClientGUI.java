@@ -114,12 +114,14 @@ public class ClientGUI {
         * it public because it is called from the state classes.
         * in the next version of the project, this method will be moved to the state classes, and will be private, for better security.
      */
-    public void startConnection() {
+    public int startConnection() {
         try {
             this.connection = Connection.createClientConnection(tfNickname.getText(), inMessages, outMessages, tfServer.getText(), Integer.parseInt(tfPort.getText()));
             new Thread(this.connection).start();
+            return 1;
         } catch (IOException ex) {
             ex.printStackTrace();
+            return 0;
         }
     }
     /*
@@ -127,12 +129,14 @@ public class ClientGUI {
      * it public because it is called from the state classes.
      * in the next version of the project, this method will be moved to the state classes, and will be private, for better security.
      */
-    public void endConnection(){
+    public int endConnection(){
         try {
             connection.close();
             connection = null;
+            return 1;
         } catch (IOException ex) {
             ex.printStackTrace();
+            return 0;
         }
     }
     public IState getState() {

@@ -4,15 +4,18 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ConnectedClientState implements IState{
+
     @Override
-    //future use
     public boolean convertStatusButton(JButton button) {
+        //future uses
         return true;
     }
 
     public ConnectedClientState(ClientGUI guiRef) {
-        guiRef.setConnectButtonColor(Color.GREEN);
-        guiRef.setDisconnectButtonColor(Color.GRAY);
-        guiRef.startConnection();
+        if(guiRef.startConnection() != 0) {
+            guiRef.setConnectButtonColor(Color.GREEN);
+            guiRef.setDisconnectButtonColor(Color.GRAY);
+        }
+
     }
 }
