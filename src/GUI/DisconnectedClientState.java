@@ -5,10 +5,10 @@ import java.awt.*;
 
 public class DisconnectedClientState implements IState{
 
-    public DisconnectedClientState(ClientGUI GUIref) {
-        GUIref.setConnectButtonColor(Color.GRAY);
-        GUIref.setDisconnectButtonColor(Color.RED);
-        GUIref.endConnection();
+    public DisconnectedClientState(ClientGUI guiRef) {
+        guiRef.setConnectButtonColor(Color.GRAY);
+        guiRef.setDisconnectButtonColor(Color.RED);
+        guiRef.endConnection(); 
     }
 
     @Override
