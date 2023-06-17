@@ -1,13 +1,12 @@
-import Connection.Connection;
-import Packets.MessagePacket;
+package il.ac.hit.Design_Pattern_Course;
 
 import javax.swing.*;
-import java.io.IOException;
-import GUI.ClientGUI;
+
+import il.ac.hit.Design_Pattern_Course.GUI.ClientGUI;
 
 /**
  * This class is the entry point of the client application.
- * It is responsible for starting the GUI.
+ * It is responsible for starting the il.ac.hit.Design_Pattern_Course.GUI.
  */
 public class Client {
     public static void main(String[] args) {

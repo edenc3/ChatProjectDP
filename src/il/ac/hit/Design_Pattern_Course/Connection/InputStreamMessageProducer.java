@@ -1,7 +1,6 @@
-package Connection;
+package il.ac.hit.Design_Pattern_Course.Connection;
 
-import Packets.MessagePacket;
-import Utils.ChatException;
+import il.ac.hit.Design_Pattern_Course.Packets.MessagePacket;
 
 import java.io.DataInputStream;
 import java.io.IOException;

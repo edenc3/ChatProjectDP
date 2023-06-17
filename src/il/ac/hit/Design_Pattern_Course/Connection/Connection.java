@@ -1,7 +1,7 @@
-package Connection;
+package il.ac.hit.Design_Pattern_Course.Connection;
 
-import Packets.HelloPacket;
-import Packets.MessagePacket;
+import il.ac.hit.Design_Pattern_Course.Packets.HelloPacket;
+import il.ac.hit.Design_Pattern_Course.Packets.MessagePacket;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
 /**
- * Connection class - represents a connection proxy design pattern
+ * il.ac.hit.Design_Pattern_Course.Connection class - represents a connection proxy design pattern
  * @ param socket - the socket
  * @ param consumer - the message consumer
  * @ param producer - the message producer
@@ -23,7 +23,7 @@ public class Connection implements Runnable {
 
     private Connection(Socket socket, MessageConsumer consumer, MessageProducer producer, String nickname) {
         /*
-        Constructor for Connection
+        Constructor for il.ac.hit.Design_Pattern_Course.Connection
          */
         this.socket = socket;
         this.consumer = consumer;
@@ -34,7 +34,7 @@ public class Connection implements Runnable {
     public static Connection createClientConnection(String nickname, BlockingQueue<MessagePacket> inMessages, BlockingQueue<MessagePacket> outMessages, String address, int port) throws IOException {
         var socket = new Socket(address, port);
 
-        // Produce messages from socket's input and write them to the `inMessages` queue for the GUI to use
+        // Produce messages from socket's input and write them to the `inMessages` queue for the il.ac.hit.Design_Pattern_Course.GUI to use
         var inputStream = new DataInputStream(socket.getInputStream());
         var producer = new InputStreamMessageProducer(inMessages, inputStream);
 

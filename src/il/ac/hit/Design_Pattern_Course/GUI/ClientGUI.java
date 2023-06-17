@@ -1,7 +1,7 @@
-package GUI;
-import Commands.CommandManager;
-import Commands.SendCommand;
-import Packets.MessagePacket;
+package il.ac.hit.Design_Pattern_Course.GUI;
+import il.ac.hit.Design_Pattern_Course.Commands.CommandManager;
+import il.ac.hit.Design_Pattern_Course.Commands.SendCommand;
+import il.ac.hit.Design_Pattern_Course.Packets.MessagePacket;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,14 +11,14 @@ import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import Connection.Connection;
-import Connection.MessageConsumer;
-import Connection.TaggedOutputStream;
+import il.ac.hit.Design_Pattern_Course.Connection.Connection;
+import il.ac.hit.Design_Pattern_Course.Connection.MessageConsumer;
+import il.ac.hit.Design_Pattern_Course.Connection.TaggedOutputStream;
 
 
 class MessageWriter {
     /*
-     * This class is responsible for writing messages to the GUI.
+     * This class is responsible for writing messages to the il.ac.hit.Design_Pattern_Course.GUI.
      */
     private JTextArea messagesText;
 
@@ -52,7 +52,7 @@ class GUIMessageConsumer extends MessageConsumer {
 
 /**
  * This class is the entry point of the client application.
- * It is responsible for starting the GUI for each client.
+ * It is responsible for starting the il.ac.hit.Design_Pattern_Course.GUI for each client.
  * It also creates the connection object and the message consumer object.
  */
 
@@ -79,7 +79,7 @@ public class ClientGUI {
 
     public ClientGUI() {
         /*
-         * Constructor that initializes the GUI components.
+         * Constructor that initializes the il.ac.hit.Design_Pattern_Course.GUI components.
          */
         frame = new JFrame();
         tf = new JTextField(10);
@@ -101,15 +101,15 @@ public class ClientGUI {
 
         _commandManager = new CommandManager();
 
-        // In messages - are messages from the server, and should be displayed in the GUI
+        // In messages - are messages from the server, and should be displayed in the il.ac.hit.Design_Pattern_Course.GUI
         inMessages = new LinkedBlockingQueue<>();
 
-        // Out messages - are messages that are written from the GUI and should be sent to the server
+        // Out messages - are messages that are written from the il.ac.hit.Design_Pattern_Course.GUI and should be sent to the server
         outMessages = new LinkedBlockingQueue<>();
-        //this Thread is responsible for sending messages to the server from the GUI
+        //this Thread is responsible for sending messages to the server from the il.ac.hit.Design_Pattern_Course.GUI
         new Thread(new GUIMessageConsumer(inMessages, messagesText)).start();
 
-        //We start the GUI in the disconnected state
+        //We start the il.ac.hit.Design_Pattern_Course.GUI in the disconnected state
         btDisconnect.setBackground(Color.RED);
         btConnect.setBackground(Color.GRAY);
 
@@ -163,7 +163,7 @@ public class ClientGUI {
 
     public void start() {
         /*
-         * This method is responsible for starting the GUI, and adding the action listeners to the buttons.
+         * This method is responsible for starting the il.ac.hit.Design_Pattern_Course.GUI, and adding the action listeners to the buttons.
          * by creating a new thread for the connection object.
          */
         frame.setLayout(new BorderLayout());
@@ -219,7 +219,7 @@ public class ClientGUI {
     }
 
     /**
-     * This class is responsible for sending messages from the GUI to the server.
+     * This class is responsible for sending messages from the il.ac.hit.Design_Pattern_Course.GUI to the server.
      * It is an inner class of the ClientGUI class.
      * It implements the ActionListener interface.
      * And it overrides the actionPerformed method.
@@ -231,7 +231,7 @@ public class ClientGUI {
             //send message to the server using Command pattern
             _commandManager.addCommand(new SendCommand(ClientGUI.this));
             _commandManager.executeCommands();
-            //display the message in the GUI
+            //display the message in the il.ac.hit.Design_Pattern_Course.GUI
             var recipient = tfRecipient.getText().equals(TaggedOutputStream.TagAll) ? "everyone" : tfRecipient.getText();
             messagesText.append(String.format("From me to %s: %s\n", recipient, tf.getText()));
             //clear the input text field after sending the message
