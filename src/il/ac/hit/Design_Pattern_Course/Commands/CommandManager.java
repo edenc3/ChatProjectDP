@@ -1,4 +1,4 @@
-package Commands;
+package il.ac.hit.Design_Pattern_Course.Commands;
 
 import java.util.ArrayList;
 import java.util.List;

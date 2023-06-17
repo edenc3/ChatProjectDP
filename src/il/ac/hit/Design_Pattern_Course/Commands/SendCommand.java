@@ -1,7 +1,7 @@
-package Commands;
+package il.ac.hit.Design_Pattern_Course.Commands;
 
-import GUI.ClientGUI;
-import Packets.MessagePacket;
+import il.ac.hit.Design_Pattern_Course.GUI.ClientGUI;
+import il.ac.hit.Design_Pattern_Course.Packets.MessagePacket;
 
 
 public class SendCommand implements ICommand{

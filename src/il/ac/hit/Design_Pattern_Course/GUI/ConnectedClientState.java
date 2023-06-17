@@ -1,4 +1,4 @@
-package GUI;
+package il.ac.hit.Design_Pattern_Course.GUI;
 
 import javax.swing.*;
 import java.awt.*;

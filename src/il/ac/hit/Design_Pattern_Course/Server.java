@@ -1,3 +1,5 @@
+package il.ac.hit.Design_Pattern_Course;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.ArrayList;
@@ -5,9 +7,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-import Connection.Connection;
+import il.ac.hit.Design_Pattern_Course.Connection.Connection;
 
-import Packets.MessagePacket;
+import il.ac.hit.Design_Pattern_Course.Packets.MessagePacket;
 
 /**
  * This class implements the Iterator design pattern.
