@@ -1,4 +1,4 @@
-package Utils;
+package il.ac.hit.Design_Pattern_Course.Utils;
 
 /**
  * This class represents a chat exception.

@@ -1,6 +1,6 @@
-package Connection;
+package il.ac.hit.Design_Pattern_Course.Connection;
 
-import Packets.MessagePacket;
+import il.ac.hit.Design_Pattern_Course.Packets.MessagePacket;
 
 import java.io.IOException;
 import java.util.concurrent.BlockingQueue;

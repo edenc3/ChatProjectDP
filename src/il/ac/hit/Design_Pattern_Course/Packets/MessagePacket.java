@@ -1,4 +1,4 @@
-package Packets;
+package il.ac.hit.Design_Pattern_Course.Packets;
 
 import com.google.gson.Gson;
 /**

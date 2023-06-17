@@ -1,4 +1,4 @@
-package Commands;
+package il.ac.hit.Design_Pattern_Course.Commands;
 
 /**
  * Interface for all commands
