@@ -56,7 +56,7 @@ class GUIMessageConsumer extends MessageConsumer {
  * It also creates the connection object and the message consumer object.
  */
 
-public class ClientGUI {
+public class ClientGUI implements IGUI{
     private JFrame frame;
     private JTextField tf;//text field for writing messages
     private JTextField tfRecipient;
@@ -145,10 +145,11 @@ public class ClientGUI {
             return 0;
         }
     }
+    @Override
     public IState getState() {
         return state;
     }
-
+    @Override
     public void setState(IState state) {
         this.state = state;
     }
@@ -160,7 +161,7 @@ public class ClientGUI {
         btDisconnect.setBackground(color);
     }
 
-
+    @Override
     public void start() {
         /*
          * This method is responsible for starting the il.ac.hit.Design_Pattern_Course.GUI, and adding the action listeners to the buttons.

@@ -6,7 +6,7 @@ import com.google.gson.Gson;
  * using Gson library from Google to convert the HelloPacket to json and vice versa
  * @ param nickname - the nickname of the user
  */
-public class HelloPacket {
+public class HelloPacket implements IPacket {
     private String nickname;
 
     public HelloPacket(String nickname){
@@ -19,7 +19,7 @@ public class HelloPacket {
     public String getNickname(){
         return this.nickname;
     }
-
+    @Override
     public String toJson() {
         /*
         Converts the HelloPacket to json

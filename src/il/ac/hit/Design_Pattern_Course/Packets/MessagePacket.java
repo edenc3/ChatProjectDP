@@ -9,7 +9,7 @@ import com.google.gson.Gson;
  * @ param message - the message
  */
 
-public class MessagePacket {
+public class MessagePacket implements IPacket{
     private String from;
     private String recipient;
     private String message;
@@ -35,6 +35,7 @@ public class MessagePacket {
         return this.message;
     }
 
+    @Override
     public String toJson() {
         /*
         Converts the MessagePacket to json
