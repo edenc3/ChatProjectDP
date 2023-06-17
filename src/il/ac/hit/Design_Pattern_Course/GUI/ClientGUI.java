@@ -95,7 +95,7 @@ public class ClientGUI {
         panelNorth = new JPanel();
         recipientLabel = new JLabel("Recipient:");
         nicknameLabel = new JLabel("Nickname:");
-        serverLabel = new JLabel("il.ac.hit.Design_Pattern_Course.Server:");
+        serverLabel = new JLabel("Server:");
         portLabel = new JLabel("Port:");
         messagesText = new JTextArea(20, 40);
 

@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CommandManager {
-    private List<ICommand> _commands;
+    private final List<ICommand> _commands;
     public CommandManager(){
-        _commands = new ArrayList<ICommand>();
+        _commands = new ArrayList<>();
     }
 
     public void addCommand(ICommand command){
