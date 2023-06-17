@@ -15,8 +15,11 @@ public class CommandManager {
 
     //implement iterator design pattern
     public void executeCommands(){
+        //execute all commands
         for (ICommand command : _commands) {
             command.execute();
         }
+        //clear commands list
+        _commands.clear();
     }
 }
