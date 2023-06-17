@@ -15,6 +15,8 @@ import Packets.MessagePacket;
  * It has a list of queues, one for each client, that stores the messages that are sent to each client.
  * The list of queues is used to later forward the messages to each individual client.
  * @ param messagesPerClient The list of queues, one for each client, that stores the messages that are sent to each client
+ *
+ * implement iterator design pattern
  */
 class ClientsMessages implements Iterable<BlockingQueue<MessagePacket>> {
     private List<BlockingQueue<MessagePacket>> messagesPerClient;

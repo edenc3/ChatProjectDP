@@ -1,4 +1,6 @@
 package GUI;
+import Commands.CommandManager;
+import Commands.SendCommand;
 import Packets.MessagePacket;
 
 import javax.swing.*;
@@ -56,13 +58,13 @@ class GUIMessageConsumer extends MessageConsumer {
 
 public class ClientGUI {
     private JFrame frame;
-    private JTextField tf;
+    private JTextField tf;//text field for writing messages
     private JTextField tfRecipient;
     private JTextField tfNickname;
     private JTextField tfServer;
     private JTextField tfPort;
     private JButton bt;
-    private JTextArea messagesText;
+    private JTextArea messagesText;//text area for displaying messages
     private JPanel panelSouth, panelCenter, panelNorth;
     private JButton btConnect, btDisconnect;
     private JLabel recipientLabel;
@@ -73,6 +75,7 @@ public class ClientGUI {
     private BlockingQueue<MessagePacket> outMessages;
     private Connection connection;
     private IState state;
+    private CommandManager _commandManager;
 
     public ClientGUI() {
         /*
@@ -96,6 +99,8 @@ public class ClientGUI {
         portLabel = new JLabel("Port:");
         messagesText = new JTextArea(20, 40);
 
+        _commandManager = new CommandManager();
+
         // In messages - are messages from the server, and should be displayed in the GUI
         inMessages = new LinkedBlockingQueue<>();
 
@@ -107,6 +112,7 @@ public class ClientGUI {
         //We start the GUI in the disconnected state
         btDisconnect.setBackground(Color.RED);
         btConnect.setBackground(Color.GRAY);
+
 
     }
     /*
@@ -154,6 +160,7 @@ public class ClientGUI {
         btDisconnect.setBackground(color);
     }
 
+
     public void start() {
         /*
          * This method is responsible for starting the GUI, and adding the action listeners to the buttons.
@@ -187,6 +194,30 @@ public class ClientGUI {
         btDisconnect.addActionListener(new DisconnectButtonsObserver());
     }
 
+    public JTextField getTf() {
+        return this.tf;
+    }
+
+    public JTextField getTfRecipient() {
+        return this.tfRecipient;
+    }
+
+    public JTextField getTfNickname() {
+        return this.tfNickname;
+    }
+
+    public JTextArea getMessagesText() {
+        return this.messagesText;
+    }
+
+    public BlockingQueue<MessagePacket> getOutMessages() {
+        return this.outMessages;
+    }
+
+    public Connection getConnection() {
+        return this.connection;
+    }
+
     /**
      * This class is responsible for sending messages from the GUI to the server.
      * It is an inner class of the ClientGUI class.
@@ -197,9 +228,14 @@ public class ClientGUI {
     class SendButtonsObserver implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            outMessages.add(new MessagePacket(connection.getNickname(), tfRecipient.getText(), tf.getText()));
+            //send message to the server using Command pattern
+            _commandManager.addCommand(new SendCommand(ClientGUI.this));
+            _commandManager.executeCommands();
+            //display the message in the GUI
             var recipient = tfRecipient.getText().equals(TaggedOutputStream.TagAll) ? "everyone" : tfRecipient.getText();
             messagesText.append(String.format("From me to %s: %s\n", recipient, tf.getText()));
+            //clear the input text field after sending the message
+            tf.setText("");
         }
     }
 
