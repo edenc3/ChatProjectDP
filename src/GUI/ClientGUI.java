@@ -228,12 +228,7 @@ public class ClientGUI {
     class SendButtonsObserver implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            //send message to the server
-            //before using SendCommand: outMessages.add(new MessagePacket(connection.getNickname(), tfRecipient.getText(), tf.getText()));
-            //after using SendCommand:
-            //ICommand command = new SendCommand(ClientGUI.this);
-            //command.execute();
-            // now let's create better practice with object of commandManager
+            //send message to the server using Command pattern
             _commandManager.addCommand(new SendCommand(ClientGUI.this));
             _commandManager.executeCommands();
             //display the message in the GUI
@@ -241,17 +236,6 @@ public class ClientGUI {
             messagesText.append(String.format("From me to %s: %s\n", recipient, tf.getText()));
             //clear the input text field after sending the message
             tf.setText("");
-
-            /*
-            public void actionPerformed(ActionEvent e) {
-            String message = textArea.getText();
-
-            // Convert the message into a Command object.
-            Command command = new SendCommand(message);
-
-            // Execute the command.
-            CommandManager.getInstance().executeCommand(command);
-            */
         }
     }
 
