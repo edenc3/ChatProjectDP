@@ -3,7 +3,13 @@ package il.ac.hit.Design_Pattern_Course.Commands;
 import il.ac.hit.Design_Pattern_Course.GUI.ClientGUI;
 import il.ac.hit.Design_Pattern_Course.Packets.MessagePacket;
 
-
+/**
+ * SendCommand class
+ * Implements ICommand interface
+ * This class responsible for sending message to server by using command pattern.
+ * @see ICommand
+ * @see SendCommand
+ */
 public class SendCommand implements ICommand{
     MessagePacket _messagePacket;
     ClientGUI _guiRef;

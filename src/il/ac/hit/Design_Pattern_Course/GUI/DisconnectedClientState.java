@@ -2,7 +2,15 @@ package il.ac.hit.Design_Pattern_Course.GUI;
 
 import javax.swing.*;
 import java.awt.*;
-
+/**
+ * DisconnectedClientState class - represents a disconnected client state
+ * Implements IState
+ * Implements design pattern - State
+ * @see IState
+ * @see DisconnectedClientState
+ * @ param guiRef - the gui reference
+ * @ method convertStatusButton - converts the status button
+ */
 public class DisconnectedClientState implements IState{
 
     @Override
